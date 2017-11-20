@@ -1,6 +1,8 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {facebookAuth} from "../actions/index";
 
 class Home extends React.Component {
     render() {
@@ -18,14 +20,18 @@ class Home extends React.Component {
         )
     }
     responseFacebook = (response) => {
-        console.log(response);
-        console.log(this.props.userAuth);
+        this.props.facebookAuth(response);
+        console.log(this.props.facebook_auth);
     }
 }
 const mapStateToProps = state => {
     return {
-        facebookAuth: state.facebookAuth
+        facebook_auth: state.facebookAuth
     }
 };
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = dispatch  => {
+    return bindActionCreators({ facebookAuth }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
