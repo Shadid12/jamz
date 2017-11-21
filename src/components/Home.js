@@ -4,12 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {facebookAuth} from "../actions/index";
 import TiSocialFacebookCircular from 'react-icons/lib/ti/social-facebook-circular';
+import Profile from './Profile';
 
 class Home extends React.Component {
     render() {
         if (this.props.facebook_auth) {
             return (
-                <div>Logged in user</div>
+                <Profile name={this.props.facebook_auth.name}
+                         profilePic={this.props.facebook_auth.picture.data.url}/>
             )
         } else {
             return (
