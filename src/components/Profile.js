@@ -1,11 +1,22 @@
 import React from 'react';
+import Search from './Search';
+import './css/profile.css';
 
 class Profile extends React.Component {
     render() {
         return (
             <div>
-                <img src={this.props.profilePic} />
-                hello {this.props.name}
+                <div className='profile-container'>
+                    <div className='profile-wraper'>
+                        <img src={this.props.profilePic} />
+                    </div>
+                </div>
+                <div className='searchWraper'>
+                    <div>hello {this.props.name}</div>
+                </div>
+                <div className='searchWraper'>
+                    <Search/>
+                </div>
             </div>
         )
     }

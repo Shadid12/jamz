@@ -1,0 +1,19 @@
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.profile-wraper {
+    display: flex;
+}
+
+.profile-wraper img {
+    border-radius: 50%;
+}
+
+.searchWraper {
+    display: flex;
+    justify-content: center;
+}
