@@ -1,5 +1,6 @@
 import React from 'react';
 import YTSearch from 'youtube-api-search'
+import VideoList from './VideoList';
 
 class Search extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class Search extends React.Component {
                     <input type="submit" value="Submit" />
                 </form>
                 <div>
-                    videos: {this.state.videos.length}
+                    <VideoList videos={this.state.videos}/>
                 </div>
             </div>
         );

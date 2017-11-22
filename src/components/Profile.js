@@ -14,9 +14,7 @@ class Profile extends React.Component {
                 <div className='searchWraper'>
                     <div>hello {this.props.name}</div>
                 </div>
-                <div className='searchWraper'>
-                    <Search/>
-                </div>
+                <Search/>
             </div>
         )
     }
