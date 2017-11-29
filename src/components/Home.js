@@ -5,13 +5,16 @@ import {bindActionCreators} from 'redux';
 import {facebookAuth} from "../actions/index";
 import TiSocialFacebookCircular from 'react-icons/lib/ti/social-facebook-circular';
 import Profile from './Profile';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Home extends React.Component {
     render() {
         if (this.props.facebook_auth) {
             return (
+                <MuiThemeProvider>
                 <Profile name={this.props.facebook_auth.name}
                          profilePic={this.props.facebook_auth.picture.data.url}/>
+                </MuiThemeProvider>
             )
         } else {
             return (
@@ -34,6 +37,7 @@ class Home extends React.Component {
         console.log(this.props.facebook_auth);
     }
 }
+
 const mapStateToProps = state => {
     return {
         facebook_auth: state.facebookAuth

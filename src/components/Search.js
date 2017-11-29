@@ -1,6 +1,8 @@
 import React from 'react';
 import YTSearch from 'youtube-api-search'
 import VideoList from './VideoList';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Search extends React.Component {
     constructor(props) {
@@ -20,7 +22,8 @@ class Search extends React.Component {
     handleSubmit(event) {
         YTSearch({key: 'AIzaSyC0T7rcpdSPMDdn9zGAtlric3_biFt3qUc', term: this.state.value}, (videos) => {
             this.setState({
-                videos: videos
+                videos: videos,
+                value: ''
             });
         });
         event.preventDefault();
@@ -30,11 +33,14 @@ class Search extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Name:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
+                    <TextField
+                      floatingLabelText="Search a song"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                    />
+                    <br />
+                    <RaisedButton label="Search" primary={true} type="submit" value="Submit"/>
+                    {/*<input type="submit" value="Submit" />*/}
                 </form>
                 <div>
                     <VideoList videos={this.state.videos}/>
