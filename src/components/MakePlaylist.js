@@ -4,6 +4,7 @@ import './css/make-list.css';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import axios from 'axios';
 
 class MakePlaylist extends React.Component {
 
@@ -30,13 +31,22 @@ class MakePlaylist extends React.Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
-        console.log(this.state.value);
-        this.setState({value: '',
+    handleSubmit = (event) => {
+    	var name = this.state.value;
+    	this.setState({value: '',
         			   open: false
-    				  });
-        event.preventDefault();
-    }
+    	});
+        axios.post('http://localhost:3001/rooms', {
+		    name: name
+		  })
+		  .then(function (response) {
+		    console.log(response);
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+		  event.preventDefault();
+	}
 
 	render() {
 		    const actions = [
