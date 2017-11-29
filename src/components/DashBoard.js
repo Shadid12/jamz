@@ -1,19 +1,34 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import axios from 'axios';
+import {List, ListItem} from 'material-ui/List';
 
 export default class DashBoard extends React.Component {
 
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	      value: 'a',
+	      value: 'b',
+	      rooms: []
 	    };
+  	}
+
+  	getRooms = () => {
+  		axios.get('http://localhost:3001/rooms').
+  		then((res) => {
+  			this.setState({rooms: res.data.rooms})
+  			console.log('rooms', this.state.rooms);
+  		}).
+  		catch((err) => {
+  			console.log(err);
+  		})
   	}
 
   	handleChange = (value) => {
 	    this.setState({
 	      value: value,
 	    });
+	    this.getRooms();
   	};
 
 	render() {
@@ -26,11 +41,18 @@ export default class DashBoard extends React.Component {
 		        <Tab label="Nearby Playlists" value="a">
 		          <div>
 		            <h2 style={styles.headline}>Nearby Playlists</h2>
-		            <p>
-		              Tabs are also controllable if you want to programmatically pass them their values.
-		              This allows for more functionality in Tabs such as not
-		              having any Tab selected or assigning them different values.
-		            </p>
+		            <List>
+		            {
+		            	this.state.rooms.map( (room) => {
+		            		return(
+		            			 <ListItem
+		            			    key={room._id}
+							        primaryText={room.name}
+							      />
+		            		)
+		            	} )
+		            }
+		            </List>
 		          </div>
 		        </Tab>
 		        <Tab label="Your Profile" value="b">
