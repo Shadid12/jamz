@@ -12,7 +12,7 @@ class Home extends React.Component {
         if (this.props.facebook_auth) {
             return (
                 <MuiThemeProvider>
-                <Profile name={this.props.facebook_auth.name}
+                    <Profile name={this.props.facebook_auth.name}
                          profilePic={this.props.facebook_auth.picture.data.url}/>
                 </MuiThemeProvider>
             )

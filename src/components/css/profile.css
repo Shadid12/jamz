@@ -17,3 +17,20 @@
     display: flex;
     justify-content: center;
 }
+
+.detail-box {
+	display: flex;
+	justify-content: space-around;
+}
+
+.search-main {
+	display: flex;
+	width: 50%;
+}
+
+.rooms {
+	display: flex;
+	width: 50%;
+	background-color: #F0F8FF;
+	margin-top: 20px;
+}

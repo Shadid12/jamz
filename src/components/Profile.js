@@ -1,6 +1,8 @@
 import React from 'react';
 import Search from './Search';
 import './css/profile.css';
+import DashBoard from './DashBoard';
+import MakePlaylist from './MakePlaylist';
 
 class Profile extends React.Component {
     render() {
@@ -14,7 +16,17 @@ class Profile extends React.Component {
                 <div className='searchWraper'>
                     <div>hello {this.props.name}</div>
                 </div>
-                <Search/>
+                <div className='detail-box'>
+                    <div className='search-main'>
+                        <Search/>
+                    </div>
+                    <div className='rooms'>
+                        <DashBoard />
+                    </div>
+                </div>
+                <div>
+                    <MakePlaylist />
+                </div>
             </div>
         )
     }
