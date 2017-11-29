@@ -40,7 +40,6 @@ class Search extends React.Component {
                     />
                     <br />
                     <RaisedButton label="Search" primary={true} type="submit" value="Submit"/>
-                    {/*<input type="submit" value="Submit" />*/}
                 </form>
                 <div>
                     <VideoList videos={this.state.videos}/>

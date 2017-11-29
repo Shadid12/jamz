@@ -24,6 +24,8 @@ class VideoList extends React.Component {
         this.setState({open: false});
     };
 
+    handleChange = (event, index, value) => this.setState({value});
+
     render() {
 
         const actions = [
