@@ -2,8 +2,10 @@ import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
+import {connect} from 'react-redux';
+import {setRooms} from '../actions/index';
 
-export default class DashBoard extends React.Component {
+class DashBoard extends React.Component {
 
 	constructor(props) {
 	    super(props);
@@ -16,8 +18,10 @@ export default class DashBoard extends React.Component {
   	getRooms = () => {
   		axios.get('http://localhost:3001/rooms').
   		then((res) => {
-  			this.setState({rooms: res.data.rooms})
-  			console.log('rooms', this.state.rooms);
+  			this.props.setRooms(res.data.rooms);
+  			console.log('rooms', this.props.rooms);
+  			// this.setState({rooms: res.data.rooms})
+  			// console.log('rooms', this.state.rooms);
   		}).
   		catch((err) => {
   			console.log(err);
@@ -70,6 +74,8 @@ export default class DashBoard extends React.Component {
 		)
 	}
 }
+
+export default connect(null, {setRooms})(DashBoard);
 
 const styles = {
   headline: {
