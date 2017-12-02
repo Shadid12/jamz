@@ -5,7 +5,8 @@ import rooms_reducer  from './set_rooms';
 
 const rootReducers = combineReducers({
     facebookAuth,
-    videoList
+    videoList,
+    rooms_reducer
 });
 
 export default rootReducers;

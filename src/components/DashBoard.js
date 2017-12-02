@@ -4,6 +4,7 @@ import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 import {setRooms} from '../actions/index';
+import {bindActionCreators} from 'redux';
 
 class DashBoard extends React.Component {
 
@@ -19,9 +20,6 @@ class DashBoard extends React.Component {
   		axios.get('http://localhost:3001/rooms').
   		then((res) => {
   			this.props.setRooms(res.data.rooms);
-  			console.log('rooms', this.props.rooms);
-  			// this.setState({rooms: res.data.rooms})
-  			// console.log('rooms', this.state.rooms);
   		}).
   		catch((err) => {
   			console.log(err);
@@ -47,7 +45,7 @@ class DashBoard extends React.Component {
 		            <h2 style={styles.headline}>Nearby Playlists</h2>
 		            <List>
 		            {
-		            	this.state.rooms.map( (room) => {
+		            	this.props.rooms.map( (room) => {
 		            		return(
 		            			 <ListItem
 		            			    key={room._id}
@@ -75,7 +73,17 @@ class DashBoard extends React.Component {
 	}
 }
 
-export default connect(null, {setRooms})(DashBoard);
+const mapStateToProps = state => {
+    return {
+        rooms: state.rooms_reducer
+    }
+};
+
+const mapDispatchToProps = dispatch  => {
+    return bindActionCreators({ setRooms }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);
 
 const styles = {
   headline: {
