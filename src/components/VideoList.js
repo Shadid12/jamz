@@ -5,6 +5,10 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import {connect} from 'react-redux';
+import {setRooms} from '../actions/index';
+import axios from 'axios';
+import {bindActionCreators} from 'redux';
 
 class VideoList extends React.Component {
     
@@ -12,16 +16,29 @@ class VideoList extends React.Component {
         super(props);
         this.state = {
             open: false,
-            value: 1
+            value: '',
+            selectedVideo: ''
         };
+
+        this.getRooms();
     }
 
-    handleOpen = () => {
-        this.setState({open: true});
-    };
+    getRooms = () => {
+      axios.get('http://localhost:3001/rooms').
+      then((res) => {
+        this.props.setRooms(res.data.rooms);
+      }).
+      catch((err) => {
+        console.log(err);
+      })
+    }
 
     handleClose = () => {
         this.setState({open: false});
+    };
+
+    handleSubmit = () => {
+      console.log(this.state.selectedVideo);
     };
 
     handleChange = (event, index, value) => this.setState({value});
@@ -37,7 +54,7 @@ class VideoList extends React.Component {
               <FlatButton
                 label="Submit"
                 primary={true}
-                onClick={this.handleClose}
+                onClick={this.handleSubmit}
               />,
             ];
 
@@ -46,13 +63,17 @@ class VideoList extends React.Component {
             <List>
                 {
                     this.props.videos.map((video) => {
-                        console.log(video);
                         return(
                             <ListItem
                                 primaryText={video.snippet.title}
                                 key={video.id.videoId}
                                 leftAvatar={<Avatar src={video.snippet.thumbnails.default.url} />}
-                                onClick={this.handleOpen}
+                                onClick={ () => {
+                                  this.setState({
+                                    open: true,
+                                    selectedVideo: video.id.videoId
+                                  });
+                                } }
                             />
                         )
                     })
@@ -65,16 +86,21 @@ class VideoList extends React.Component {
                       Select a playlist to add to 
                       <br />
                       <SelectField
-                          floatingLabelText="Frequency"
+                          floatingLabelText="Choose A Playlist"
                           value={this.state.value}
                           onChange={this.handleChange}>
-                          <MenuItem value={1} primaryText="Never" />
-                          <MenuItem value={2} primaryText="Every Night" />
-                          <MenuItem value={3} primaryText="Weeknights" />
-                          <MenuItem value={4} primaryText="Weekends" />
-                          <MenuItem value={5} primaryText="Weekly" />
-                       </SelectField>
-
+                          {
+                            this.props.rooms.map( (room) => {
+                                return(
+                                   <MenuItem
+                                      key={room._id}
+                                      value={room._id}
+                                      primaryText={room.name}
+                                    />
+                                )
+                            } )
+                          }
+                      </SelectField>
                 </Dialog>
             </List>
             </div>
@@ -82,4 +108,15 @@ class VideoList extends React.Component {
     }
 }
 
-export default VideoList;
+const mapStateToProps = state => {
+    return {
+        rooms: state.rooms_reducer
+    }
+};
+
+const mapDispatchToProps = dispatch  => {
+    return bindActionCreators({ setRooms }, dispatch);
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(VideoList);
