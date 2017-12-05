@@ -38,7 +38,18 @@ class VideoList extends React.Component {
     };
 
     handleSubmit = () => {
-      console.log(this.state.selectedVideo);
+      console.log(this.state.selectedVideo, this.state.value);
+      axios.put( `http://localhost:3001/rooms/${this.state.value}`, {
+        song: this.state.selectedVideo
+      })
+      .then( (response) => {
+        console.log(response);
+        this.setState({open: false});
+      })
+      .catch( (error) => {
+        console.log(error);
+      });
+
     };
 
     handleChange = (event, index, value) => this.setState({value});
