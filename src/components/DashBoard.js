@@ -50,6 +50,7 @@ class DashBoard extends React.Component {
 		            			 <ListItem
 		            			    key={room._id}
 							        primaryText={room.name}
+							        onClick={this.props._Setbroadcast}
 							      />
 		            		)
 		            	} )
