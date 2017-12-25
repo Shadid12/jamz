@@ -36,7 +36,7 @@ class MakePlaylist extends React.Component {
     	this.setState({value: '',
         			   open: false
     	});
-        axios.post('http://localhost:3001/rooms', {
+        axios.post('https://zamsapi.herokuapp.com/rooms', {
 		    name: name
 		  })
 		  .then(function (response) {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 import {setRooms} from '../actions/index';
+import {setCurrentRoom} from '../actions/index';
 import {bindActionCreators} from 'redux';
 
 class DashBoard extends React.Component {
@@ -17,7 +18,7 @@ class DashBoard extends React.Component {
   	}
 
   	getRooms = () => {
-  		axios.get('http://localhost:3001/rooms').
+  		axios.get('https://zamsapi.herokuapp.com/rooms').
   		then((res) => {
   			this.props.setRooms(res.data.rooms);
   		}).
@@ -50,7 +51,9 @@ class DashBoard extends React.Component {
 		            			 <ListItem
 		            			    key={room._id}
 							        primaryText={room.name}
-							        onClick={this.props._Setbroadcast}
+							        onClick={() => {
+							        	this.props.setCurrentRoom(room._id);
+							        }}
 							      />
 		            		)
 		            	} )
@@ -81,7 +84,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch  => {
-    return bindActionCreators({ setRooms }, dispatch);
+    return bindActionCreators({ setRooms, setCurrentRoom }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);

@@ -4,6 +4,9 @@ import './css/profile.css';
 import DashBoard from './DashBoard';
 import MakePlaylist from './MakePlaylist';
 import BroadcastState from './BroadcastState';
+import {connect} from 'react-redux';
+import CurrentRoom from './CurrentRoom'
+
 
 class Profile extends React.Component {
     constructor(props) {
@@ -12,13 +15,6 @@ class Profile extends React.Component {
             _broadcast: false
         }
     }
-
-    _Setbroadcast = (e) => {
-        e.preventDefault();
-        this.setState({
-          _broadcast: true
-        })
-    } 
 
     render() {
         return (
@@ -35,11 +31,11 @@ class Profile extends React.Component {
                     <div className='search-main'>
                         <Search/>
                     </div>
-                    {this.state._broadcast ? ( 
-                        <div>Good</div>                     
+                    {this.props.current_room !== '' ? ( 
+                        <div><CurrentRoom /></div>                     
                      ) : (
                         <div className='rooms'>
-                            <DashBoard _Setbroadcast={this._Setbroadcast} />
+                            <DashBoard  />
                         </div> 
                     )}
 
@@ -52,4 +48,10 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+        current_room: state.current_room_reducer
+    }
+};
+
+export default connect(mapStateToProps, null)(Profile);

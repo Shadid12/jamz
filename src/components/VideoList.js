@@ -24,7 +24,7 @@ class VideoList extends React.Component {
     }
 
     getRooms = () => {
-      axios.get('http://localhost:3001/rooms').
+      axios.get('https://zamsapi.herokuapp.com/rooms').
       then((res) => {
         this.props.setRooms(res.data.rooms);
       }).
@@ -39,7 +39,7 @@ class VideoList extends React.Component {
 
     handleSubmit = () => {
       console.log(this.state.selectedVideo, this.state.value);
-      axios.put( `http://localhost:3001/rooms/${this.state.value}`, {
+      axios.put( `https://zamsapi.herokuapp.com/rooms/${this.state.value}`, {
         song: this.state.selectedVideo
       })
       .then( (response) => {
@@ -98,7 +98,7 @@ class VideoList extends React.Component {
                       <br />
                       <SelectField
                           floatingLabelText="Choose A Playlist"
-                          value={this.state.value}
+                          value={this.state.rooms}
                           onChange={this.handleChange}>
                           {
                             this.props.rooms.map( (room) => {
