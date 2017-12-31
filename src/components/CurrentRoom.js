@@ -11,13 +11,14 @@ class CurrentRoom extends React.Component {
 		super(props);
 		this._getAllSongs();
 		this.state = {
-			playlist: []
+			playlist: [],
+			current: 0
 		}
 
 	}
 
 	_getAllSongs() {
-		axios.get(`http://localhost:3001/rooms/${this.props.current_room}`)
+		axios.get(`https://zamsapi.herokuapp.com/rooms/${this.props.current_room}`)
 		  .then( (response) => {
 		    this.setState({playlist: response.data.room.playlist});
 		  })
@@ -29,23 +30,29 @@ class CurrentRoom extends React.Component {
 
 	render() {
 		var youtube;
-		if (this.state.playlist) {
+		if (this.state.playlist.length > 0) {
 		  youtube = <YouTube
-				        videoId={this.state.playlist[0]}
+				        videoId={this.state.playlist[this.state.current]}
 				        opts={opts}
 				     />;
 		} else {
-		  youtube = (<button>Broadcast</button>);
+		  youtube = <div>Hey Add some songs to this room</div>
 		}
 		return(
 			<div>
 				<button onClick={() => {
 					this.props.setCurrentRoom('');
-				}}>BACK</button>
+				}}>STOP</button>
+				<button onClick={() => {
+					if (this.state.current + 1 < this.state.playlist.length ){
+						this.setState({ current: this.state.current + 1})
+					} else {
+						this.setState({ current: 0 });
+					}
+				}}>Next Song</button>
 				<div className='rooms'>
-					I am in a room now {this.props.current_room}
+					{youtube}
 	            </div>
-	            {youtube}
             </div>
 		)
 	}
